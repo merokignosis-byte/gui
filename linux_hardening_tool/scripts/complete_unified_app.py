@@ -605,7 +605,95 @@ def api_status():
 # ============================================================================
 # Report & Export Routes
 # ============================================================================
+@app.route("/generate_certificate")
+@login_required
+def generate_certificate():
+    """Generate PDF certificate of hardening compliance"""
+    try:
+        # Try using reportlab for PDF generation
+        try:
+            from reportlab.lib.pagesizes import letter, A4
+            from reportlab.pdfgen import canvas
+            from reportlab.lib.units import inch
+        except ImportError:
+            # Fallback: Generate HTML certificate that can be printed to PDF
+            return generate_html_certificate()
+        
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        cert_file = REPORT_FOLDER / f"hardening_certificate_{timestamp}.pdf"
+        
+        # Create PDF
+        c = canvas.Canvas(str(cert_file), pagesize=letter)
+        width, height = letter
+        
+        # Title
+        c.setFont("Helvetica-Bold", 24)
+        c.drawCentredString(width/2, height - 1*inch, "🔒 SECURITY HARDENING CERTIFICATE")
+        
+        # Border
+        c.rect(0.5*inch, 0.5*inch, width - 1*inch, height - 1*inch, stroke=1, fill=0)
+        
+        # Content
+        c.setFont("Helvetica", 12)
+        y_position = height - 2*inch
+        
+        c.drawString(1*inch, y_position, f"System: {os.uname().nodename}")
+        y_position -= 0.3*inch
+        
+        c.drawString(1*inch, y_position, f"Date: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        y_position -= 0.3*inch
+        
+        c.drawString(1*inch, y_position, f"Certified by: {session.get('username', 'Admin')}")
+        y_position -= 0.5*inch
+        
+        # Get statistics
+        db_summary = get_db_summary()
+        total_checks = sum(v["total"] for v in db_summary.values())
+        passed_checks = sum(v["fixed"] for v in db_summary.values())
+        
+        c.setFont("Helvetica-Bold", 14)
+        c.drawString(1*inch, y_position, "HARDENING SUMMARY:")
+        y_position -= 0.4*inch
+        
+        c.setFont("Helvetica", 11)
+        for topic, stats in db_summary.items():
+            percentage = (stats["fixed"] / stats["total"] * 100) if stats["total"] > 0 else 0
+            c.drawString(1.2*inch, y_position, f"✓ {topic}: {stats['fixed']}/{stats['total']} ({percentage:.1f}%)")
+            y_position -= 0.25*inch
+        
+        y_position -= 0.3*inch
+        c.setFont("Helvetica-Bold", 12)
+        overall_pct = (passed_checks / total_checks * 100) if total_checks > 0 else 0
+        c.drawString(1*inch, y_position, f"OVERALL COMPLIANCE: {overall_pct:.1f}% ({passed_checks}/{total_checks})")
+        
+        # Footer
+        c.setFont("Helvetica-Italic", 10)
+        c.drawCentredString(width/2, 1*inch, "This certificate verifies system hardening was performed")
+        c.drawCentredString(width/2, 0.75*inch, "Linux System Hardening Tool - Enterprise Edition")
+        
+        c.save()
+        
+        return send_file(cert_file, as_attachment=True, download_name=f"certificate_{timestamp}.pdf")
+        
+    except Exception as e:
+        flash(f'PDF generation failed: {str(e)}. Install reportlab: pip install reportlab', 'error')
+        return redirect(url_for('index'))
 
+def generate_html_certificate():
+    """Fallback HTML certificate that can be printed to PDF"""
+    db_summary = get_db_summary()
+    total_checks = sum(v["total"] for v in db_summary.values())
+    passed_checks = sum(v["fixed"] for v in db_summary.values())
+    overall_pct = (passed_checks / total_checks * 100) if total_checks > 0 else 0
+    
+    return render_template("certificate.html",
+                         hostname=os.uname().nodename,
+                         timestamp=datetime.datetime.now(),
+                         username=session.get('username', 'Admin'),
+                         db_summary=db_summary,
+                         total_checks=total_checks,
+                         passed_checks=passed_checks,
+                         overall_pct=overall_pct)
 @app.route("/export_report")
 @login_required
 def export_report():
@@ -707,4 +795,5 @@ if __name__ == "__main__":
         debug=debug_mode,
         threaded=True
     )
+
 
