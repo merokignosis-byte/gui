@@ -1,0 +1,8 @@
+========================================================================
+Enhanced Access Control Hardening Script v2.0
+Mode: scan
+========================================================================
+
+[0;31m[FAIL][0m This script must be run as root or with sudo privileges
+[0;32m[INFO][0m Please run: sudo ./hardening_scripts/access_control.sh scan
+

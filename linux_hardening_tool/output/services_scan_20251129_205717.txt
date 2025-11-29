@@ -1,0 +1,133 @@
+
+Checking: Disable autofs
+[0;32m[PASS][0m autofs is disabled
+
+Checking: Disable avahi-daemon
+[0;32m[PASS][0m avahi-daemon is disabled
+
+Checking: Disable DHCP server
+[0;32m[PASS][0m isc-dhcp-server is disabled
+
+Checking: Disable DNS server (bind9)
+[0;32m[PASS][0m bind9 is disabled
+
+Checking: Disable dnsmasq
+[0;32m[PASS][0m dnsmasq is disabled
+
+Checking: Disable FTP server
+[0;32m[PASS][0m vsftpd is disabled
+
+Checking: Disable LDAP server
+[0;32m[PASS][0m slapd is disabled
+
+Checking: Disable Dovecot (IMAP/POP3)
+[0;32m[PASS][0m dovecot is disabled
+
+Checking: Disable NFS server
+[0;32m[PASS][0m nfs-kernel-server is disabled
+
+Checking: Disable NIS server
+[0;32m[PASS][0m nis is disabled
+
+Checking: Disable Cups printing service
+[0;32m[PASS][0m cups is disabled
+
+Checking: Disable rpcbind
+[0;32m[PASS][0m rpcbind is disabled
+
+Checking: Disable rsync daemon
+[0;32m[PASS][0m rsync is disabled
+
+Checking: Disable Samba
+[0;32m[PASS][0m smbd is disabled
+
+Checking: Disable snmp daemon
+[0;32m[PASS][0m snmpd is disabled
+
+Checking: Disable tftp server
+[0;32m[PASS][0m tftpd-hpa is disabled
+
+Checking: Disable Squid proxy
+[0;32m[PASS][0m squid is disabled
+
+Checking: Disable Apache2 web server
+[0;32m[PASS][0m apache2 is disabled
+
+Checking: Disable xinetd
+[0;32m[PASS][0m xinetd is disabled
+
+Checking: Disable GDM (GUI login manager)
+[0;32m[PASS][0m gdm is disabled
+
+Checking: Disable Postfix MTA
+[0;32m[PASS][0m postfix is disabled
+
+Checking: Disable NFS common
+[0;32m[PASS][0m nfs-common is disabled
+
+Checking: Disable Telnet server
+[0;32m[PASS][0m telnetd is disabled
+
+Checking: Disable rsh server
+[0;32m[PASS][0m rsh-server is disabled
+
+Checking: Disable talk server
+[0;32m[PASS][0m talkd is disabled
+
+Checking: Disable nscd service
+[0;32m[PASS][0m nscd is disabled
+
+Checking: Disable ntpdate service
+[0;32m[PASS][0m ntpdate is disabled
+
+Checking: Disable LPD printing service
+[0;32m[PASS][0m lpd is disabled
+
+Checking: Disable rsyslog
+[0;32m[PASS][0m rsyslog is disabled
+
+Checking: Remove NIS client
+[0;31m[FAIL][0m nis installed
+
+Checking: Remove rsh client
+[0;32m[PASS][0m rsh-client not installed
+
+Checking: Remove talk client
+[0;32m[PASS][0m talk not installed
+
+Checking: Remove telnet client
+[0;31m[FAIL][0m telnet installed
+
+Checking: Remove ftp client
+[0;31m[FAIL][0m ftp installed
+
+Checking: Remove ldap-utils
+[0;32m[PASS][0m ldap-utils not installed
+
+Checking: Time Sync — only chrony allowed
+[0;32m[PASS][0m Chrony active
+
+Checking: Only approved ports open
+[0;31m[FAIL][0m Unauthorized:  323 323 5000
+
+Checking: Only approved services are listening on a network interface
+[0;31m[FAIL][0m Unauthorized services:  udp udp tcp
+
+Checking: Ensure rsyslog is running and disabled for remote logging
+[0;32m[PASS][0m rsyslog active and local-only
+
+Checking: Ensure NFS client is not installed
+[0;32m[PASS][0m NFS client not installed
+
+Checking: Mail server configured for local-only mode
+[0;32m[PASS][0m Mail server local-only
+
+========================================================
+Summary
+========================================================
+Total Checks: 41
+Passed: 36
+Failed: 5
+Fixed: 0
+========================================================
+[0;31m[FAIL] Issues detected.[0m

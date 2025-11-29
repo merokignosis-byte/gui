@@ -1,0 +1,82 @@
+
+Checking: Ensure IPv6 status is identified
+Rule ID: NET-DEVC-IPv6
+[0;32m[PASS][0m IPv6 status: disable_ipv6=0
+
+Checking: Ensure wireless interfaces are disabled
+Rule ID: NET-DEVC-WIFI
+[0;32m[PASS][0m No wireless interfaces detected.
+
+Checking: Ensure Bluetooth service is not in use
+Rule ID: NET-DEVC-BLUETOOTH
+[0;32m[PASS][0m Bluetooth service is disabled
+
+Checking: Ensure dccp kernel module is not available
+Rule ID: NET-MOD-DCCP
+[0;32m[PASS][0m Module dccp is blacklisted
+
+Checking: Ensure tipc kernel module is not available
+Rule ID: NET-MOD-TIPC
+[0;32m[PASS][0m Module tipc is blacklisted
+
+Checking: Ensure rds kernel module is not available
+Rule ID: NET-MOD-RDS
+[0;32m[PASS][0m Module rds is blacklisted
+
+Checking: Ensure sctp kernel module is not available
+Rule ID: NET-MOD-SCTP
+[0;32m[PASS][0m Module sctp is blacklisted
+
+Checking: Ensure IP forwarding is disabled
+Rule ID: NET-PAR-FWD
+[0;32m[PASS][0m net.ipv4.ip_forward is correctly set to 0
+
+Checking: Ensure packet redirect sending is disabled
+Rule ID: NET-PAR-REDIR
+[0;32m[PASS][0m net.ipv4.conf.all.send_redirects is correctly set to 0
+
+Checking: Ensure bogus ICMP responses are ignored
+Rule ID: NET-PAR-BOGUS
+[0;32m[PASS][0m net.ipv4.icmp_ignore_bogus_error_responses is correctly set to 1
+
+Checking: Ensure broadcast ICMP requests are ignored
+Rule ID: NET-PAR-BCAST
+[0;32m[PASS][0m net.ipv4.icmp_echo_ignore_broadcasts is correctly set to 1
+
+Checking: Ensure ICMP redirects are not accepted
+Rule ID: NET-PAR-ICMPRED
+[0;32m[PASS][0m net.ipv4.conf.all.accept_redirects is correctly set to 0
+
+Checking: Ensure secure ICMP redirects are not accepted
+Rule ID: NET-PAR-SREDIR
+[0;32m[PASS][0m net.ipv4.conf.all.secure_redirects is correctly set to 0
+
+Checking: Ensure reverse path filtering is enabled
+Rule ID: NET-PAR-RPF
+[0;32m[PASS][0m net.ipv4.conf.all.rp_filter is correctly set to 1
+
+Checking: Ensure source routed packets are not accepted
+Rule ID: NET-PAR-SROUTE
+[0;32m[PASS][0m net.ipv4.conf.all.accept_source_route is correctly set to 0
+
+Checking: Ensure suspicious packets are logged
+Rule ID: NET-PAR-MART
+[0;31m[FAIL][0m net.ipv4.conf.all.log_martians is 0 (expected 1)
+
+Checking: Ensure TCP SYN cookies are enabled
+Rule ID: NET-PAR-SYNC
+[0;32m[PASS][0m net.ipv4.tcp_syncookies is correctly set to 1
+
+Checking: Ensure IPv6 router advertisements are not accepted
+Rule ID: NET-PAR-RA
+[0;32m[PASS][0m net.ipv6.conf.all.accept_ra is correctly set to 0
+
+========================================================================
+Network Hardening Summary
+========================================================================
+Total Checks: 18
+Passed: 17
+Failed: 1
+Fixed:  0
+========================================================================
+[0;31m[FAIL] Some checks failed.[0m

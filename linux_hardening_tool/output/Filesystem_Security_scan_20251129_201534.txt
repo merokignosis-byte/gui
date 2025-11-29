@@ -1,0 +1,166 @@
+Topic: Filesystem Security
+Mode: scan
+Timestamp: 20251129_201534
+Exit Code: 0
+======================================================================
+
+========================================================================
+Filesystem Hardening Script - SAFE VERSION
+Mode: scan
+========================================================================
+[0;32m[INFO][0m === Checking Filesystem Kernel Modules ===
+
+Checking: Ensure cramfs kernel module is not available
+Rule ID: FS-KM-CRAMFS
+[0;31m[FAIL][0m Module cramfs is not properly disabled
+
+Checking: Ensure freevxfs kernel module is not available
+Rule ID: FS-KM-FREEVXFS
+[0;31m[FAIL][0m Module freevxfs is not properly disabled
+
+Checking: Ensure hfs kernel module is not available
+Rule ID: FS-KM-HFS
+[0;31m[FAIL][0m Module hfs is not properly disabled
+
+Checking: Ensure hfsplus kernel module is not available
+Rule ID: FS-KM-HFSPLUS
+[0;31m[FAIL][0m Module hfsplus is not properly disabled
+
+Checking: Ensure jffs2 kernel module is not available
+Rule ID: FS-KM-JFFS2
+[0;31m[FAIL][0m Module jffs2 is not properly disabled
+
+Checking: Ensure overlayfs kernel module is not available
+Rule ID: FS-KM-OVERLAYFS
+[0;31m[FAIL][0m Module overlayfs is not properly disabled
+
+Checking: Ensure squashfs kernel module is not available
+Rule ID: FS-KM-SQUASHFS
+[0;31m[FAIL][0m Module squashfs is not properly disabled
+
+Checking: Ensure udf kernel module is not available
+Rule ID: FS-KM-UDF
+[0;31m[FAIL][0m Module udf is not properly disabled
+
+Checking: Ensure usb-storage kernel module is not available
+Rule ID: FS-KM-USB_STORAGE
+[0;31m[FAIL][0m Module usb-storage is not properly disabled
+[0;32m[INFO][0m === Checking /tmp Configuration ===
+
+Checking: Check if /tmp is a separate partition
+Rule ID: FS-PART--TMP-EXISTS
+[0;32m[PASS][0m /tmp is a separate partition
+
+Checking: Ensure nodev is set on /tmp
+Rule ID: FS-PART--TMP-OPT-NODEV
+[0;32m[PASS][0m /tmp has nodev option set
+
+Checking: Ensure nosuid is set on /tmp
+Rule ID: FS-PART--TMP-OPT-NOSUID
+[0;32m[PASS][0m /tmp has nosuid option set
+
+Checking: Ensure noexec is set on /tmp
+Rule ID: FS-PART--TMP-OPT-NOEXEC
+[0;31m[FAIL][0m /tmp does not have noexec option set
+[0;32m[INFO][0m === Checking /dev/shm Configuration ===
+
+Checking: Check if /dev/shm is a separate partition
+Rule ID: FS-PART--DEV-SHM-EXISTS
+[0;32m[PASS][0m /dev/shm is a separate partition
+
+Checking: Ensure nodev is set on /dev/shm
+Rule ID: FS-PART--DEV-SHM-OPT-NODEV
+[0;32m[PASS][0m /dev/shm has nodev option set
+
+Checking: Ensure nosuid is set on /dev/shm
+Rule ID: FS-PART--DEV-SHM-OPT-NOSUID
+[0;32m[PASS][0m /dev/shm has nosuid option set
+
+Checking: Ensure noexec is set on /dev/shm
+Rule ID: FS-PART--DEV-SHM-OPT-NOEXEC
+[0;31m[FAIL][0m /dev/shm does not have noexec option set
+[0;32m[INFO][0m === Checking /home Configuration ===
+
+Checking: Check if /home is a separate partition
+Rule ID: FS-PART--HOME-EXISTS
+[0;31m[FAIL][0m /home is not mounted
+
+Checking: Ensure nodev is set on /home
+Rule ID: FS-PART--HOME-OPT-NODEV
+[0;31m[FAIL][0m /home is not mounted
+
+Checking: Ensure nosuid is set on /home
+Rule ID: FS-PART--HOME-OPT-NOSUID
+[0;31m[FAIL][0m /home is not mounted
+[0;32m[INFO][0m === Checking /var Configuration ===
+
+Checking: Check if /var is a separate partition
+Rule ID: FS-PART--VAR-EXISTS
+[0;31m[FAIL][0m /var is not mounted
+
+Checking: Ensure nodev is set on /var
+Rule ID: FS-PART--VAR-OPT-NODEV
+[0;31m[FAIL][0m /var is not mounted
+
+Checking: Ensure nosuid is set on /var
+Rule ID: FS-PART--VAR-OPT-NOSUID
+[0;31m[FAIL][0m /var is not mounted
+[0;32m[INFO][0m === Checking /var/tmp Configuration ===
+
+Checking: Check if /var/tmp is a separate partition
+Rule ID: FS-PART--VAR-TMP-EXISTS
+[0;31m[FAIL][0m /var/tmp is not mounted
+
+Checking: Ensure nodev is set on /var/tmp
+Rule ID: FS-PART--VAR-TMP-OPT-NODEV
+[0;31m[FAIL][0m /var/tmp is not mounted
+
+Checking: Ensure nosuid is set on /var/tmp
+Rule ID: FS-PART--VAR-TMP-OPT-NOSUID
+[0;31m[FAIL][0m /var/tmp is not mounted
+
+Checking: Ensure noexec is set on /var/tmp
+Rule ID: FS-PART--VAR-TMP-OPT-NOEXEC
+[0;31m[FAIL][0m /var/tmp is not mounted
+[0;32m[INFO][0m === Checking /var/log Configuration ===
+
+Checking: Check if /var/log is a separate partition
+Rule ID: FS-PART--VAR-LOG-EXISTS
+[0;31m[FAIL][0m /var/log is not mounted
+
+Checking: Ensure nodev is set on /var/log
+Rule ID: FS-PART--VAR-LOG-OPT-NODEV
+[0;31m[FAIL][0m /var/log is not mounted
+
+Checking: Ensure nosuid is set on /var/log
+Rule ID: FS-PART--VAR-LOG-OPT-NOSUID
+[0;31m[FAIL][0m /var/log is not mounted
+
+Checking: Ensure noexec is set on /var/log
+Rule ID: FS-PART--VAR-LOG-OPT-NOEXEC
+[0;31m[FAIL][0m /var/log is not mounted
+[0;32m[INFO][0m === Checking /var/log/audit Configuration ===
+
+Checking: Check if /var/log/audit is a separate partition
+Rule ID: FS-PART--VAR-LOG-AUDIT-EXISTS
+[1;33m[WARN][0m Directory /var/log/audit does not exist
+
+Checking: Ensure nodev is set on /var/log/audit
+Rule ID: FS-PART--VAR-LOG-AUDIT-OPT-NODEV
+[1;33m[WARN][0m Directory /var/log/audit does not exist
+
+Checking: Ensure nosuid is set on /var/log/audit
+Rule ID: FS-PART--VAR-LOG-AUDIT-OPT-NOSUID
+[1;33m[WARN][0m Directory /var/log/audit does not exist
+
+Checking: Ensure noexec is set on /var/log/audit
+Rule ID: FS-PART--VAR-LOG-AUDIT-OPT-NOEXEC
+[1;33m[WARN][0m Directory /var/log/audit does not exist
+
+========================================================================
+Summary
+========================================================================
+Total Checks: 35
+Passed: 6
+Failed: 25
+[1;33m[WARN][0m 25 checks failed. Run with 'fix' mode to remediate.

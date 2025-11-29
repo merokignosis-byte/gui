@@ -1,0 +1,99 @@
+Topic: Audit & Logging
+Mode: scan
+Timestamp: 20251129_201542
+Exit Code: 0
+======================================================================
+
+========================================================================
+Logging and Auditing Hardening Script - Enhanced Version
+Mode: scan
+========================================================================
+[0;32m[INFO][0m === System Logging - journald ===
+
+Checking: Ensure journald service is enabled and active
+Rule ID: LOG-JOURNALD-ENABLED
+[0;32m[PASS][0m journald is active
+
+Checking: Ensure journald log file rotation is configured
+Rule ID: LOG-JOURNALD-COMPRESS
+[0;31m[FAIL][0m journald rotation not configured
+
+Checking: Ensure journald is configured to persist logs to disk
+Rule ID: LOG-JOURNALD-PERSIST
+[0;32m[PASS][0m journald persistent storage is configured
+[0;32m[INFO][0m 
+[0;32m[INFO][0m === System Logging - rsyslog ===
+
+Checking: Ensure rsyslog is installed
+Rule ID: LOG-RSYSLOG-INSTALLED
+[1;33m[WARN][0m rsyslog is not installed (journald may be sufficient)
+
+Checking: Ensure rsyslog service is enabled and active
+Rule ID: LOG-RSYSLOG-ENABLED
+[1;33m[WARN][0m rsyslog not installed - skipping service check
+
+Checking: Ensure rsyslog default file permissions are configured
+Rule ID: LOG-RSYSLOG-DEFPERMS
+[1;33m[WARN][0m rsyslog not installed - skipping
+
+Checking: Ensure rsyslog is configured to send logs to remote host
+Rule ID: LOG-RSYSLOG-REMOTE
+[1;33m[WARN][0m rsyslog not installed - skipping remote logging check
+
+Checking: Ensure logrotate is configured
+Rule ID: LOG-LOGROTATE
+[0;32m[PASS][0m logrotate is configured
+
+Checking: Ensure permissions on all logfiles are configured
+Rule ID: LOG-FILE-PERMS
+[0;31m[FAIL][0m Found 15 log files with incorrect permissions
+[0;32m[INFO][0m 
+[0;32m[INFO][0m === System Auditing - auditd ===
+
+Checking: Ensure auditd is installed
+Rule ID: AUD-AUDITD-INSTALLED
+[0;31m[FAIL][0m auditd is not installed
+
+Checking: Ensure auditd service is enabled and running
+Rule ID: AUD-AUDITD-ENABLED
+[0;31m[FAIL][0m auditd is not properly configured
+
+Checking: Ensure auditing for processes prior to auditd is enabled
+Rule ID: AUD-BOOT-PARAMS
+[0;31m[FAIL][0m Boot parameter audit=1 is not set
+
+Checking: Ensure audit_backlog_limit is sufficient
+Rule ID: AUD-BACKLOG-LIMIT
+[0;31m[FAIL][0m audit_backlog_limit not set or insufficient (current: not set)
+
+Checking: Ensure audit log storage size is configured
+Rule ID: AUD-LOG-STORAGE
+
+Checking: Ensure system is disabled when audit logs are full
+Rule ID: AUD-DISK-FULL
+
+Checking: Ensure audit rules are configured
+Rule ID: AUD-RULES
+[0;31m[FAIL][0m Custom audit rules not configured
+
+Checking: Ensure audit configuration is immutable
+Rule ID: AUD-IMMUTABLE
+[1;33m[WARN][0m Audit configuration is not immutable
+[0;32m[INFO][0m 
+[0;32m[INFO][0m === Integrity Checking - AIDE ===
+
+Checking: Ensure AIDE is installed
+Rule ID: AUD-AIDE-INSTALLED
+[0;31m[FAIL][0m AIDE is not installed
+
+Checking: Ensure filesystem integrity is regularly checked
+Rule ID: AUD-AIDE-CONFIG
+[1;33m[WARN][0m AIDE not installed - skipping
+
+========================================================================
+Summary
+========================================================================
+Total Checks: 19
+Passed: 7
+Failed: 10
+[1;33m[WARN][0m 10 checks failed. Run with 'fix' mode to remediate.

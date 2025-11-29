@@ -1,0 +1,159 @@
+Topic: Authentication & PAM
+Mode: scan
+Timestamp: 20251129_201534
+Exit Code: 0
+======================================================================
+
+==========================================
+User Accounts and Environment Hardening
+Mode: scan
+==========================================
+
+=== Shadow Password Suite Parameters ===
+
+Checking: Ensure PASS_MAX_DAYS is configured
+Rule ID: USR-LOGINDEFS-PASS_MAX_DAYS
+[0;31m[FAIL][0m PASS_MAX_DAYS = 99999 (expected: 365)
+
+Checking: Ensure PASS_MIN_DAYS is configured
+Rule ID: USR-LOGINDEFS-PASS_MIN_DAYS
+[0;32m[PASS][0m PASS_MIN_DAYS is configured correctly: 0
+
+Checking: Ensure PASS_WARN_AGE is configured
+Rule ID: USR-LOGINDEFS-PASS_WARN_AGE
+[0;32m[PASS][0m PASS_WARN_AGE is configured correctly: 7
+
+Checking: Ensure strong password hashing algorithm is configured
+Rule ID: USR-PASS-HASH
+[0;31m[FAIL][0m Weak password hashing: YESCRYPT
+
+Checking: Ensure inactive password lock is configured
+Rule ID: USR-INACTIVE-LOCK
+[0;31m[FAIL][0m Inactive password lock not configured properly: -1
+
+Checking: Ensure all users last password change date is in the past
+Rule ID: USR-PASS-LASTCHANGE
+[0;32m[PASS][0m All password change dates are valid
+
+=== Root and System Accounts ===
+
+Checking: Ensure root is the only UID 0 account
+Rule ID: USR-ROOT-UID-ZERO
+[0;32m[PASS][0m Only root has UID 0
+
+Checking: Ensure root is the only GID 0 account
+Rule ID: USR-ROOT-GID-ZERO
+[0;32m[PASS][0m Only root has GID 0
+
+Checking: Ensure group root is the only GID 0 group
+Rule ID: USR-GROUP-ROOT-GID-ZERO
+[0;32m[PASS][0m Only root group has GID 0
+
+Checking: Ensure root account access is controlled
+Rule ID: USR-ROOT-ACCESS
+[1;33m[WARN][0m Root password is set (consider locking and using sudo)
+[0;31m[FAIL][0m Root access control issues found
+
+Checking: Ensure root path integrity
+Rule ID: USR-ROOT-PATH
+[0;31m[FAIL][0m Current directory (.) in root PATH
+[0;31m[FAIL][0m PATH directory /home/kali/.local/bin not owned by root (owner: kali)
+[0;31m[FAIL][0m PATH directory /sbin has excessive permissions: 777
+[0;31m[FAIL][0m PATH directory /bin has excessive permissions: 777
+[0;31m[FAIL][0m Root PATH integrity issues found
+
+Checking: Ensure root user umask is configured
+Rule ID: USR-ROOT-UMASK
+[0;31m[FAIL][0m Root umask not properly configured
+
+Checking: Ensure system accounts do not have a valid login shell
+Rule ID: USR-SYSTEM-NOLOGIN
+[0;31m[FAIL][0m System accounts with login shell found:
+sync:/bin/sync
+postgres:/bin/bash
+
+Checking: Ensure accounts without a valid login shell are locked
+Rule ID: USR-NOLOGIN-LOCKED
+[0;32m[PASS][0m All nologin accounts are properly locked
+
+=== User Default Environment ===
+
+Checking: Ensure nologin is not listed in /etc/shells
+Rule ID: USR-NOLOGIN-SHELLS
+[0;32m[PASS][0m nologin is not in /etc/shells
+
+Checking: Ensure default user shell timeout is configured
+Rule ID: USR-SHELL-TIMEOUT
+[0;31m[FAIL][0m Shell timeout is not configured
+
+Checking: Ensure default user umask is configured
+Rule ID: USR-DEFAULT-UMASK
+[0;31m[FAIL][0m Default user umask is not configured
+
+==========================================
+Summary
+==========================================
+Total Checks: 17
+Passed: 8
+Failed: 9
+
+[1;33m[WARN][0m Some checks failed. Run with 'fix' mode to remediate.
+[1;33m[WARN][0m Usage: /home/kali/gui/linux_hardening_tool/hardening_scripts/user_accounts.sh fix
+==========================================
+
+
+Errors:
+/home/kali/gui/linux_hardening_tool/hardening_scripts/user_accounts.sh: line 194: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied
+grep: /etc/shadow: Permission denied

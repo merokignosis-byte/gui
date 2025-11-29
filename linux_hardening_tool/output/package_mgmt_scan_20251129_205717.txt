@@ -1,0 +1,50 @@
+[0;32m[INFO][0m Starting GRUB security hardening...
+chown: changing ownership of '/boot/grub/grub.cfg': Operation not permitted
+chmod: changing permissions of '/boot/grub/grub.cfg': Operation not permitted
+[0;32m[INFO][0m GRUB config permissions set to 400 root:root
+
+Checking: Ensure bootloader password is set
+[0;31m[FAIL][0m Bootloader password is not set
+
+Checking: Ensure access to bootloader config is restricted
+[0;32m[PASS][0m Bootloader config permissions correct
+
+Checking: Ensure ASLR is enabled
+[0;32m[PASS][0m ASLR is enabled
+
+Checking: Ensure ptrace_scope is restricted
+[0;32m[PASS][0m ptrace_scope is restricted (1)
+
+Checking: Ensure core dumps are restricted
+[0;32m[PASS][0m Core dumps are restricted
+
+Checking: Ensure prelink is not installed
+[0;32m[PASS][0m prelink not installed
+
+Checking: Ensure Automatic Error Reporting is not enabled
+[0;32m[PASS][0m Apport is disabled
+
+Checking: Ensure local login warning banner is configured properly
+[0;32m[PASS][0m /etc/issue banner configured
+
+Checking: Ensure remote login warning banner is configured properly
+[0;32m[PASS][0m /etc/issue.net banner configured
+
+Checking: Ensure GPG keys are configured for package management
+[0;32m[PASS][0m APT GPG keyrings are configured
+
+Checking: Ensure package repositories use secure protocols (HTTPS)
+[0;32m[PASS][0m All package repositories use HTTPS or secure protocols
+
+Checking: Ensure unattended-upgrades is enabled
+[0;32m[PASS][0m unattended-upgrades is enabled
+
+========================================================================
+Package Management Hardening Summary
+========================================================================
+Total Checks: 12
+Passed: 11
+Failed: 1
+Fixed: 0
+========================================================================
+[0;31m[FAIL] Some checks failed. See above for details.[0m
