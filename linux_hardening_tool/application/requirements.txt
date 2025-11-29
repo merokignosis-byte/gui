@@ -1,0 +1,45 @@
+# ============================================================================
+# Linux System Hardening Tool - Complete Requirements
+# For both CLI and Web GUI modes
+# Python 3.6+ required
+# ============================================================================
+
+# Core Dependencies (Required for both CLI and Web)
+# ============================================================================
+
+# SQLite support (usually built-in, but listed for completeness)
+# sqlite3 is part of Python standard library
+
+# Web Framework (Required for Web GUI)
+# ============================================================================
+Flask==3.0.0              # Main web framework
+Werkzeug==3.0.1           # WSGI utility library for Flask
+Jinja2==3.1.2             # Template engine for Flask
+MarkupSafe==2.1.3         # Safe string handling for Jinja2
+itsdangerous==2.1.2       # Secure session handling
+click==8.1.7              # Command line interface for Flask
+
+# Remote System Control (Optional - for SSH features)
+# ============================================================================
+paramiko==3.4.0           # SSH client library
+cryptography==41.0.7      # Cryptographic operations for paramiko
+bcrypt==4.1.2             # Password hashing for SSH keys
+PyNaCl==1.5.0             # Networking and Cryptography library
+cffi==1.16.0              # C Foreign Function Interface
+
+# Additional Utilities (Optional but recommended)
+# ============================================================================
+python-dotenv==1.0.0      # Load environment variables from .env file
+
+# Development & Testing (Optional - only for development)
+# ============================================================================
+# pytest==7.4.3           # Testing framework
+# pytest-cov==4.1.0       # Code coverage for tests
+# black==23.12.1          # Code formatter
+# flake8==7.0.0           # Code linter
+# pylint==3.0.3           # Static code analysis
+
+# Production Server (Optional - for production deployment)
+# ============================================================================
+# gunicorn==21.2.0        # WSGI HTTP Server for production
+# gevent==23.9.1          # Coroutine-based networking library
