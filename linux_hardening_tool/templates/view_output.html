@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ topic_name }} - Output</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; }
+        .header { border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 20px; }
+        .rule { border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .rule-pass { border-left: 4px solid #28a745; background: #f0fff4; }
+        .rule-fail { border-left: 4px solid #dc3545; background: #fff5f5; }
+        .rule-warn { border-left: 4px solid #ffc107; background: #fffbf0; }
+        .rule-id { font-weight: bold; color: #333; }
+        .status { padding: 5px 10px; border-radius: 3px; font-size: 12px; font-weight: bold; }
+        .status-pass { background: #28a745; color: white; }
+        .status-fail { background: #dc3545; color: white; }
+        .status-warn { background: #ffc107; color: black; }
+        .raw-output { background: #f8f9fa; padding: 15px; border: 1px solid #ddd; border-radius: 5px; font-family: monospace; white-space: pre-wrap; font-size: 12px; max-height: 400px; overflow-y: auto; }
+        .btn { padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 5px; }
+        .btn:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 {{ topic_name }} - Scan Results</h1>
+            <p><strong>File:</strong> {{ filename }}</p>
+        </div>
+
+        {% if rules %}
+        <h2>Parsed Rules</h2>
+        {% for rule_id, data in rules.items() %}
+        <div class="rule rule-{{ data.status|lower }}">
+            <div class="rule-id">
+                Rule ID: {{ rule_id }}
+                <span class="status status-{{ data.status|lower }}">{{ data.status }}</span>
+            </div>
+            <p>{{ data.description }}</p>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>No rules parsed. See raw output below.</p>
+        {% endif %}
+
+        <h2>Raw Output</h2>
+        <div class="raw-output">{{ raw_output }}</div>
+
+        <div style="margin-top: 20px;">
+            <a href="{{ url_for('index') }}" class="btn">← Back to Dashboard</a>
+            <a href="{{ url_for('download_file', filename=filename) }}" class="btn">💾 Download</a>
+        </div>
+    </div>
+</body>
+</html>
