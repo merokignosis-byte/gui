@@ -208,10 +208,28 @@ def install_python_dependencies(mode):
     """Install required Python packages"""
     log_info("Installing Python dependencies...")
     
+    base_dir = Path.cwd()
+    req_file = base_dir / "requirements.txt"
+    
+    # Check if requirements.txt exists
+    if req_file.exists():
+        log_info("Found requirements.txt, installing packages...")
+        try:
+            subprocess.run(
+                [sys.executable, "-m", "pip", "install", "-r", str(req_file)],
+                check=True
+            )
+            log_success("All packages installed from requirements.txt")
+            return
+        except subprocess.CalledProcessError as e:
+            log_error(f"Failed to install from requirements.txt: {e}")
+            log_info("Falling back to manual installation...")
+    
+    # Fallback: manual installation
     packages = []
     
     if mode in ["web", "both"]:
-        packages = ["Flask==3.0.0", "werkzeug==3.0.1", "paramiko==3.4.0"]
+        packages = ["Flask==3.0.0", "werkzeug==3.0.1", "paramiko==3.4.0", "reportlab==4.0.7"]
     
     if not packages:
         log_info("No additional packages needed for CLI mode")
@@ -220,10 +238,10 @@ def install_python_dependencies(mode):
     print()
     for package in packages:
         try:
+            log_info(f"Installing {package}...")
             subprocess.run(
-                [sys.executable, "-m", "pip", "install", "-q", package],
-                check=True,
-                capture_output=True
+                [sys.executable, "-m", "pip", "install", package],
+                check=True
             )
             log_success(f"  ✓ {package.split('==')[0]}")
         except subprocess.CalledProcessError:
@@ -765,3 +783,4 @@ if __name__ == "__main__":
         import traceback
         traceback.print_exc()
         sys.exit(1)
+
