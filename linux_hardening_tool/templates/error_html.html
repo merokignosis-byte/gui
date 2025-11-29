@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - System Hardening Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .error-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 60px 40px;
+            max-width: 600px;
+            text-align: center;
+            animation: slideIn 0.5s;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .error-icon {
+            font-size: 6em;
+            margin-bottom: 20px;
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+        
+        .error-message {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .error-details {
+            background: #f8f9fa;
+            border-left: 4px solid #dc3545;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+            text-align: left;
+        }
+        
+        .error-details strong {
+            display: block;
+            color: #721c24;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .error-details p {
+            color: #495057;
+            line-height: 1.6;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .suggestions {
+            text-align: left;
+            margin-top: 30px;
+            padding: 20px;
+            background: #e7f3ff;
+            border-radius: 8px;
+        }
+        
+        .suggestions h3 {
+            color: #0066cc;
+            margin-bottom: 15px;
+        }
+        
+        .suggestions ul {
+            list-style-position: inside;
+            color: #495057;
+        }
+        
+        .suggestions li {
+            padding: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-icon">⚠️</div>
+        <h1>Oops! Something went wrong</h1>
+        
+        {% if error %}
+        <div class="error-message">{{ error }}</div>
+        {% endif %}
+        
+        {% if message %}
+        <div class="error-details">
+            <strong>Error Details:</strong>
+            <p>{{ message }}</p>
+        </div>
+        {% endif %}
+        
+        <div>
+            <a href="/" class="btn">← Back to Dashboard</a>
+            <a href="/logout" class="btn">🔓 Logout</a>
+        </div>
+        
+        <div class="suggestions">
+            <h3>💡 Troubleshooting Tips:</h3>
+            <ul>
+                <li>Check if all required files are in place</li>
+                <li>Verify you have proper permissions</li>
+                <li>Review the application logs</li>
+                <li>Ensure all dependencies are installed</li>
+                <li>Contact your system administrator</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

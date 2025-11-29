@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote System Control</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .card h2 {
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .alert.show {
+            display: block;
+            animation: slideDown 0.3s;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+        }
+        
+        .session-list {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .session-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid #28a745;
+        }
+        
+        .session-info h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .session-info p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .session-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .action-btn {
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .action-btn:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .action-btn .icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .action-btn .title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .action-btn .desc {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .log-output {
+            background: #1e1e1e;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            margin-top: 20px;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        
+        .loading-overlay.show {
+            display: flex;
+        }
+        
+        .loading-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .disabled-overlay {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            color: #721c24;
+        }
+        
+        .disabled-overlay h3 {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🌐 Remote System Control</h1>
+            <a href="/" class="btn btn-primary">← Back to Dashboard</a>
+        </div>
+
+        <!-- Alert Container -->
+        <div id="alertContainer"></div>
+
+        {% if not paramiko_available %}
+        <!-- Disabled Warning -->
+        <div class="disabled-overlay">
+            <h3>⚠️ Remote Control Not Available</h3>
+            <p>The paramiko library is not installed. Remote SSH features are disabled.</p>
+            <p style="margin-top: 10px;"><strong>To enable:</strong> pip install paramiko</p>
+        </div>
+        {% else %}
+
+        <!-- Connection Form -->
+        <div class="card">
+            <h2>🔌 Connect to Remote System</h2>
+            <form id="connectionForm" onsubmit="connectRemote(event)">
+                <div class="form-group">
+                    <label for="host">Hostname or IP Address</label>
+                    <input type="text" id="host" name="host" placeholder="192.168.1.100" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="username">SSH Username</label>
+                    <input type="text" id="username" name="username" placeholder="root" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="keyPath">SSH Private Key Path</label>
+                    <input type="text" id="keyPath" name="keyPath" value="~/.ssh/id_ed25519" required>
+                </div>
+                
+                <button type="submit" class="btn btn-success">🔗 Connect</button>
+            </form>
+        </div>
+
+        <!-- Active Sessions -->
+        <div class="card" id="sessionsCard" style="display: none;">
+            <h2>📡 Active Sessions</h2>
+            <div class="session-list" id="sessionList"></div>
+        </div>
+
+        <!-- Remote Actions -->
+        <div class="card" id="actionsCard" style="display: none;">
+            <h2>⚙️ Remote Operations</h2>
+            <p style="color: #666; margin-bottom: 20px;">
+                Select an action to execute on the remote system. All operations will be executed with appropriate privileges.
+            </p>
+            
+            <div class="action-grid">
+                <div class="action-btn" onclick="remoteAction('scan_all')">
+                    <div class="icon">🔍</div>
+                    <div class="title">Full System Scan</div>
+                    <div class="desc">Scan all security topics</div>
+                </div>
+                
+                <div class="action-btn" onclick="remoteAction('fix_filesystem')">
+                    <div class="icon">📁</div>
+                    <div class="title">Fix Filesystem</div>
+                    <div class="desc">Apply filesystem hardening</div>
+                </div>
+                
+                <div class="action-btn" onclick="remoteAction('fix_network')">
+                    <div class="icon">🌐</div>
+                    <div class="title">Fix Network</div>
+                    <div class="desc">Apply network hardening</div>
+                </div>
+                
+                <div class="action-btn" onclick="remoteAction('fix_authentication')">
+                    <div class="icon">🔐</div>
+                    <div class="title">Fix Authentication</div>
+                    <div class="desc">Harden PAM & passwords</div>
+                </div>
+                
+                <div class="action-btn" onclick="remoteAction('fix_services')">
+                    <div class="icon">⚙️</div>
+                    <div class="title">Fix Services</div>
+                    <div class="desc">Secure system services</div>
+                </div>
+                
+                <div class="action-btn" onclick="remoteAction('fix_kernel')">
+                    <div class="icon">🧠</div>
+                    <div class="title">Fix Kernel</div>
+                    <div class="desc">Apply kernel hardening</div>
+                </div>
+                
+                <div class="action-btn" onclick="remoteAction('fix_audit')">
+                    <div class="icon">📊</div>
+                    <div class="title">Fix Audit</div>
+                    <div class="desc">Configure audit logging</div>
+                </div>
+                
+                <div class="action-btn" onclick="remoteAction('report')">
+                    <div class="icon">📄</div>
+                    <div class="title">Generate Report</div>
+                    <div class="desc">Create full report</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Output Log -->
+        <div class="card" id="outputCard" style="display: none;">
+            <h2>📋 Execution Log</h2>
+            <div class="log-output" id="logOutput">
+                Waiting for operations...
+            </div>
+        </div>
+
+        {% endif %}
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <h3 id="loadingText">Processing...</h3>
+        </div>
+    </div>
+
+    <script>
+        let currentSessionId = null;
+
+        function showAlert(message, type = 'info') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} show`;
+            alertDiv.textContent = message;
+            
+            const container = document.getElementById('alertContainer');
+            container.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.classList.remove('show');
+                setTimeout(() => alertDiv.remove(), 300);
+            }, 5000);
+        }
+
+        function showLoading(text = 'Processing...') {
+            document.getElementById('loadingText').textContent = text;
+            document.getElementById('loadingOverlay').classList.add('show');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.remove('show');
+        }
+
+        function connectRemote(event) {
+            event.preventDefault();
+            
+            const formData = {
+                host: document.getElementById('host').value,
+                username: document.getElementById('username').value,
+                key_path: document.getElementById('keyPath').value
+            };
+            
+            showLoading('Connecting to remote system...');
+            
+            fetch('/remote/connect', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    hideLoading();
+                    showAlert(`Connection failed: ${data.error}`, 'error');
+                } else {
+                    currentSessionId = data.session_id;
+                    pollConnectionStatus(data.session_id);
+                }
+            })
+            .catch(error => {
+                hideLoading();
+                showAlert(`Error: ${error.message}`, 'error');
+            });
+        }
+
+        function pollConnectionStatus(sessionId) {
+            const interval = setInterval(() => {
+                fetch(`/task_status/${sessionId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'completed') {
+                            clearInterval(interval);
+                            hideLoading();
+                            showAlert('Connected successfully!', 'success');
+                            updateSessionList();
+                            showRemoteControls();
+                        } else if (data.status === 'error') {
+                            clearInterval(interval);
+                            hideLoading();
+                            showAlert(`Connection error: ${data.error}`, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        clearInterval(interval);
+                        hideLoading();
+                        showAlert(`Error: ${error.message}`, 'error');
+                    });
+            }, 1000);
+        }
+
+        function updateSessionList() {
+            const host = document.getElementById('host').value;
+            const username = document.getElementById('username').value;
+            
+            const sessionHTML = `
+                <div class="session-item">
+                    <div class="session-info">
+                        <h3>${host}</h3>
+                        <p>Connected as: ${username}</p>
+                    </div>
+                    <div class="session-actions">
+                        <button class="btn btn-danger" onclick="disconnectRemote()">
+                            🔌 Disconnect
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('sessionList').innerHTML = sessionHTML;
+            document.getElementById('sessionsCard').style.display = 'block';
+        }
+
+        function showRemoteControls() {
+            document.getElementById('actionsCard').style.display = 'block';
+            document.getElementById('outputCard').style.display = 'block';
+        }
+
+        function remoteAction(action) {
+            if (!currentSessionId) {
+                showAlert('No active session!', 'error');
+                return;
+            }
+            
+            const actionMap = {
+                'scan_all': 'filesystem',
+                'fix_filesystem': 'filesystem',
+                'fix_network': 'network',
+                'fix_authentication': 'authentication',
+                'fix_services': 'services',
+                'fix_kernel': 'kernel',
+                'fix_audit': 'audit',
+                'report': 'filesystem'
+            };
+            
+            showLoading(`Executing ${action}...`);
+            appendLog(`\n[${new Date().toLocaleTimeString()}] Starting ${action}...`);
+            
+            fetch('/remote/execute', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    session_id: currentSessionId,
+                    action: action,
+                    topic_id: actionMap[action]
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    hideLoading();
+                    showAlert(`Error: ${data.error}`, 'error');
+                    appendLog(`\n[ERROR] ${data.error}`);
+                } else {
+                    pollRemoteExecution(data.task_id);
+                }
+            })
+            .catch(error => {
+                hideLoading();
+                showAlert(`Error: ${error.message}`, 'error');
+                appendLog(`\n[ERROR] ${error.message}`);
+            });
+        }
+
+        function pollRemoteExecution(taskId) {
+            const interval = setInterval(() => {
+                fetch(`/task_status/${taskId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'completed') {
+                            clearInterval(interval);
+                            hideLoading();
+                            showAlert('Operation completed!', 'success');
+                            if (data.output) {
+                                appendLog(`\n${data.output}`);
+                            }
+                            if (data.log_file) {
+                                appendLog(`\n[INFO] Full log saved: ${data.log_file}`);
+                            }
+                        } else if (data.status === 'failed' || data.status === 'error') {
+                            clearInterval(interval);
+                            hideLoading();
+                            showAlert('Operation failed!', 'error');
+                            if (data.errors) {
+                                appendLog(`\n[ERROR] ${data.errors}`);
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        clearInterval(interval);
+                        hideLoading();
+                        showAlert(`Error: ${error.message}`, 'error');
+                    });
+            }, 2000);
+        }
+
+        function appendLog(text) {
+            const logOutput = document.getElementById('logOutput');
+            logOutput.textContent += text;
+            logOutput.scrollTop = logOutput.scrollHeight;
+        }
+
+        function disconnectRemote() {
+            if (!currentSessionId) return;
+            
+            fetch(`/remote/disconnect/${currentSessionId}`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showAlert('Disconnected successfully', 'info');
+                    currentSessionId = null;
+                    document.getElementById('sessionsCard').style.display = 'none';
+                    document.getElementById('actionsCard').style.display = 'none';
+                    document.getElementById('outputCard').style.display = 'none';
+                }
+            })
+            .catch(error => {
+                showAlert(`Error disconnecting: ${error.message}`, 'error');
+            });
+        }
+    </script>
+</body>
+</html>
