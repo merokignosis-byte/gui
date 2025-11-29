@@ -26,6 +26,10 @@ cryptography==41.0.7      # Cryptographic operations for paramiko
 bcrypt==4.1.2             # Password hashing for SSH keys
 PyNaCl==1.5.0             # Networking and Cryptography library
 cffi==1.16.0              # C Foreign Function Interface
+Flask==3.0.0
+werkzeug==3.0.1
+paramiko==3.4.0
+reportlab==4.0.7
 
 # Additional Utilities (Optional but recommended)
 # ============================================================================
@@ -43,3 +47,4 @@ python-dotenv==1.0.0      # Load environment variables from .env file
 # ============================================================================
 # gunicorn==21.2.0        # WSGI HTTP Server for production
 # gevent==23.9.1          # Coroutine-based networking library
+
