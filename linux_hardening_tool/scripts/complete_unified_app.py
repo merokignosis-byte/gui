@@ -564,7 +564,9 @@ def view_output(topic_id):
     output_file = get_latest_output_for_topic(topic_id)
     
     if not output_file or not output_file.exists():
-        return jsonify({"error": "No output found"}), 404
+        return render_template("error.html", 
+                             error="No output found",
+                             message=f"No scan results available for {hardening.topics.get(topic_id, {}).get('name', topic_id)}")
     
     try:
         with open(output_file, 'r') as f:
@@ -572,15 +574,17 @@ def view_output(topic_id):
         
         rules = parse_script_output(content)
         
-        return jsonify({
-            "topic": hardening.topics[topic_id]['name'],
-            "file": output_file.name,
-            "rules": rules,
-            "raw_output": content
-        })
+        # Return HTML template instead of JSON
+        return render_template("view_output.html",
+                             topic_name=hardening.topics[topic_id]['name'],
+                             topic_id=topic_id,
+                             filename=output_file.name,
+                             rules=rules,
+                             raw_output=content)
     except Exception as e:
-        return jsonify({"error": f"Failed to read output: {str(e)}"}), 500
-
+        return render_template("error.html",
+                             error="Failed to read output",
+                             message=str(e))
 @app.route("/api/status")
 @login_required
 def api_status():
@@ -703,3 +707,4 @@ if __name__ == "__main__":
         debug=debug_mode,
         threaded=True
     )
+
